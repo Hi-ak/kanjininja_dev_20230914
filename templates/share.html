@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+    
+{% block contents %}
+
+    <div class="img-content center container">
+        <div class="img-fit">
+            <img class="image-fit" src="static/user_images/{{ img_name }}.png" alt="Error"></img>
+        </div>
+        
+        <!--<a class="pure-button pure-button-primary" href="../static/user_images/{{ img_name }}.png" download="MyKanjiName.png">Download!</a>
+        -->
+    </div>
+    
+    <h2 class="font-tamanegi-kaisho">{{ eng_name }}'s Kanji Name!</h2>
+    <h2 class="font-tamanegi-kaisho">Wanna get your kanji name?</h2>
+    <button type="button" class="pure-button-primary pure-button" onclick="location.href='/index.cgi'">Get my Kanji name!</button>
+        
+{% endblock %}
+

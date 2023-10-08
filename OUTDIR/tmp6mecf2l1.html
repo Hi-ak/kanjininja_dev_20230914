@@ -1,0 +1,75 @@
+<body bgcolor="#f0f0f8">
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#6622aa">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>ModuleNotFoundError</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial">Python 3.6.11: /opt/alt/python36/bin/python3.6<br>Tue Sep  6 17:37:53 2022</font></td></tr></table>
+    
+<p>A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.</p>
+<table width="100%" cellspacing=0 cellpadding=0 border=0>
+<tr><td bgcolor="#d8bbff"><big>&nbsp;</big><a href="file:///home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/index.cgi">/home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/index.cgi</a> in <strong>&lt;module&gt;</strong>()</td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;3</small>&nbsp;import&nbsp;cgitb<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;4</small>&nbsp;cgitb.enable(display=0,&nbsp;logdir="OUTDIR",format="html")<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;5</small>&nbsp;from&nbsp;wsgiref.handlers&nbsp;import&nbsp;CGIHandler<br>
+</tt></font></td></tr>
+<tr><td bgcolor="#ffccee"><tt>=&gt;<small>&nbsp;&nbsp;&nbsp;&nbsp;6</small>&nbsp;from&nbsp;app&nbsp;import&nbsp;app<br>
+</tt></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;7</small>&nbsp;CGIHandler().run(app)<br>
+</tt></font></td></tr>
+<tr><td><small><font color="#909090">app <em>undefined</em></font></small></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=0 border=0>
+<tr><td bgcolor="#d8bbff"><big>&nbsp;</big><a href="file:///home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/app.py">/home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/app.py</a> in <strong>&lt;module&gt;</strong>()</td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;4</small>&nbsp;<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;5</small>&nbsp;import&nbsp;converter<br>
+</tt></font></td></tr>
+<tr><td bgcolor="#ffccee"><tt>=&gt;<small>&nbsp;&nbsp;&nbsp;&nbsp;6</small>&nbsp;import&nbsp;google_trans<br>
+</tt></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;7</small>&nbsp;import&nbsp;kana2kanji<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;8</small>&nbsp;import&nbsp;renderer<br>
+</tt></font></td></tr>
+<tr><td><small><font color="#909090">google_trans <em>undefined</em></font></small></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=0 border=0>
+<tr><td bgcolor="#d8bbff"><big>&nbsp;</big><a href="file:///home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/google_trans.py">/home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/google_trans.py</a> in <strong>&lt;module&gt;</strong>()</td></tr>
+<tr><td bgcolor="#ffccee"><tt>=&gt;<small>&nbsp;&nbsp;&nbsp;&nbsp;1</small>&nbsp;from&nbsp;googletrans&nbsp;import&nbsp;Translator<br>
+</tt></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;2</small>&nbsp;<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;3</small>&nbsp;import&nbsp;converter<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;4</small>&nbsp;import&nbsp;re<br>
+</tt></font></td></tr>
+<tr><td><font color="#909090"><tt>&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;&nbsp;5</small>&nbsp;<br>
+</tt></font></td></tr>
+<tr><td><small><font color="#909090">googletrans <em>undefined</em>, Translator <em>undefined</em></font></small></td></tr></table><p><strong>ModuleNotFoundError</strong>: No module named 'googletrans'
+<br><tt><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>&nbsp;</tt>args&nbsp;=
+("No module named 'googletrans'",)
+<br><tt><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>&nbsp;</tt>msg&nbsp;=
+"No module named 'googletrans'"
+<br><tt><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>&nbsp;</tt>name&nbsp;=
+'googletrans'
+<br><tt><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>&nbsp;</tt>path&nbsp;=
+None
+<br><tt><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>&nbsp;</tt>with_traceback&nbsp;=
+&lt;built-in method with_traceback of ModuleNotFoundError object&gt;
+
+
+<!-- The above is a description of an error in a Python program, formatted
+     for a Web browser because the 'cgitb' module was enabled.  In case you
+     are not reading this in a Web browser, here is the original traceback:
+
+Traceback (most recent call last):
+  File "index.cgi", line 6, in &lt;module&gt;
+    from app import app
+  File "/home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/app.py", line 6, in &lt;module&gt;
+    import google_trans
+  File "/home/c8796066/public_html/haki.conohawing.com/KanjiConverter-deploy/google_trans.py", line 1, in &lt;module&gt;
+    from googletrans import Translator
+ModuleNotFoundError: No module named 'googletrans'
+
+-->

@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block header %} 
+{% endblock %} 
+{% block contents %} 
+
+<div>
+    <p>
+    <div class="pure-g">
+        
+        <div id="content" class="pure-u-1 pure-u-sm-1 pure-u-md-2-3 pure-u-lg-2-3 pure-u-xl-3-5">
+            
+            
+            <form action="/index.cgi/generate", method="POST" class="pure-form"> <!--postにしてるのはスクレイピング的に自動で画像を保存されたくないから-->
+                <div class="input-container">
+                    <input type="text" id="myname" name="myname" class="center" placeholder="Input your first name!">
+                </div>
+
+                <div class="container">
+                    
+
+                    <div class="pure-control-group">
+                        <label for="aligned-name" class="">Select Frame</label>
+                        <select class="dropdown-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="ninja" name="framestyle">
+                        
+                        <option value="ninja">🥷 Ninja</option>
+                        <option value="sakura">🌸 Cherry Blossoms</option>
+                        <option value="sushi">🍣 Sushi</option>
+                        <option value="leaves">🍁 Autumn Leaves</option>
+                        <option value="nami">🗻 Ocean and Mt.Fuji</option>
+                        
+                        </select>
+                    </div>
+                    
+                    <div class="pure-control-group">
+                        <label for="aligned-name" class="">Select Font</label>
+                        <select class="dropdown-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="" name="fontname">
+                        
+                        <option value="tamanegi-kaisho">Traditional</option>
+                        <option value="tamanegi-geki">Traditional Wild</option>
+                        <option value="zenmaru-bold">Kawaii</option>
+                        <option value="genkai-mincho">Horror</option>
+                        
+                        </select>
+                    </div>
+                    
+                    <div class="pure-control-group">
+                        <label for="aligned-name" class="">Select Color</label>
+                        <select class="dropdown-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="" name="fontcolor">
+                        
+                        <option value="black"><span style="color:black">Black</span></option>
+                        <option value="red"><span style="color:red">Red</span></option>
+                        <option value="blue"><span style="color:blue">Blue</span></option>
+                        <option value="pink"><span style="color:pink">Pink</span></option>
+                        <option value="lightblue"><span style="color:lightblue">Light Blue</span></option>
+                        <option value="green"><span style="color:green">Green</span></option>
+                        <option value="lightgreen"><span style="color:lightgreen">Light Green</span></option>
+                        <option value="brown"><span style="color:brown">Brown</span></option>
+                        <option value="navy"><span style="color:navy">Navy</span></option>
+                        <option value="yellow"><span style="color: yellow">Yellow</span></option>
+                        <option value="purple"><span style="color: purple">Purple</span></option>
+                        <option value="gray"><span style="color:gray">Gray</span></option>
+                        
+                        
+                        </select>
+                    </div>
+                    
+                  </div>
+                  
+                  <button type="submit" class="pure-button pure-button-primary">Get Kanji Name!</button>
+                  <br>
+            </form>
+
+            <br>
+            <h3>In this website, you can convert your English name into Japanese Kanji name.<br><br>Also, you can decorate the background of your name! Enjoy :D</h3>
+
+            
+        </div>
+        
+    </div>
+    </p>
+</div>
+<script>
+    const PLACE_HOLDERS = [
+        "Input your name!",
+        "Alex",
+        "Charlie",
+        "Diego",
+        "Kate",
+        "Input your name!",
+        "Isabella",
+        "Emily",
+        "Francisco",
+        "George",
+        "Benjamin",
+        "Desmond",
+        "Input Your name!",
+        "Henry",
+        "Isaac",
+        "Juliana",
+        "David",
+        "Antony",
+        "Tommy",
+        "Alejandra",
+        "Input Your name!",
+        "Allan",
+        "Christine",
+        "Gregory",
+        "Iverson",
+        "Juan",
+        "William",
+        "Otto"
+    ]
+    const $myname = document.getElementById("myname");
+
+    //1秒で出る => 1.5秒間止まる => 0.5秒で消える
+
+    console.log("ddd");
+
+    var FILLIN_MSEC = 1000;
+    var STAY_MSEC = 1500;
+    var RESET_MSEC = 700;
+    var t = 0;
+    var idx = 0;
+    var id = setInterval(() => {
+        t += 30;
+        text = PLACE_HOLDERS[idx];
+        if (0 <= t && t <= FILLIN_MSEC) {
+            var i = Math.round(t / FILLIN_MSEC * text.length) + 1; 
+            $myname.placeholder = text.substring(0, i);
+        } else if (t <= STAY_MSEC + FILLIN_MSEC) {
+            $myname.placeholder = text;
+        } else if (t <= RESET_MSEC + STAY_MSEC + FILLIN_MSEC) {
+            var sec_after_start_of_reset = t - STAY_MSEC - FILLIN_MSEC;
+            var i = Math.round((1 - sec_after_start_of_reset / RESET_MSEC) * text.length);
+            $myname.placeholder = text.substring(0, i);
+        } else {
+            $myname.placeholder = "";
+            t = 0; //時間を初期化
+            idx++; //表示する
+            if (idx == PLACE_HOLDERS.length) {
+                idx = 0;
+            }
+        }
+    }, 30)
+
+    
+</script>
+{% endblock %}
+
+</html>

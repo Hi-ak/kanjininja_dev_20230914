@@ -1,0 +1,207 @@
+{% extends "layout.html" %}
+    
+{% block contents %}
+
+    <div class="img-content center container">
+        <h1: style="color:gray; font-size: 40px; outline: 2px; outline-color: black;" class="font-tamanegi-kaisho">Success!</h1>
+        <div class="img-fit">
+            <img class="image-fit" src="static/user_images/{{ img_name }}.png" alt="Error"></img>
+        </div>
+        
+        <!--<a class="pure-button pure-button-primary" href="../static/user_images/{{ img_name }}.png" download="MyKanjiName.png">Download!</a>
+        -->
+    </div>
+    <h3 class="font-tamanegi-kaisho" style="color:dodgerblue">↑Let's share your kanji name!↑</h3>
+    <br>
+    <h3 class="font-tamanegi-kaisho">Your Kanji Name:</h3><input class="font-tamanegi-kaisho readonly-input center" id="mykanjiname" style="color:black; max-width: 50dvw;"  value="{{ kanji_name }}"  readonly></h2>
+    <a class="pure-button" onclick="CopyKanjiNameToClipBoard(this)" style="background-color: lightblue; "><img src="static/img/clipboard-plus.svg" style=""> </a>
+    <a class="pure-button" onclick="CopyShareLinkToClipBoard(this)" style="background-color: lightgreen;"><img src="static/img/link-45deg.svg"> </a>
+
+    {% if kanji_name_suggestions %}
+        <h2 class="font-tamanegi-kaisho">Your other kanji names↓</h2>
+    {% endif %}
+    
+    <div id="kanji_suggestions">
+        {% for suggestion in kanji_name_suggestions %}
+            <div class="kanji_suggestion_card">
+                <h3 class="kanji_suggestion">{{ suggestion }}</h3>
+                <button class="generate_with_suggestion_button" type="button" onclick="onGetKanjiNameButtonOnSuggestionCardClicked('{{ suggestion }}')">Get!</button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <br>
+        <h2 class="font-tamanegi-kaisho">Try again with another name?</h2>
+        <div id="content" class="pure-u-1 pure-u-sm-1 pure-u-md-2-3 pure-u-lg-2-3 pure-u-xl-3-5">
+            
+            
+            <form id="regen_form" action="/index.cgi/generate", method="POST" class="pure-form"  enctype="multipart/form-data"> <!--postにしてるのはスクレイピング的に自動で画像を保存されたくないから-->
+                <div class="input-container">
+                    <input type="text" id="myname" name="myname" class="center" placeholder="Input your name!" value="{{ eng_name }}">
+                </div>
+
+                <div class="container">
+                    
+
+                    <div class="pure-control-group">
+                        <label for="aligned-name" class="">Select Frame</label>
+                        <select class="dropdown-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="{{ frame_style }}" name="framestyle" id="select_frame_style">
+                        
+                            <option value="ninja">🥷 Ninja</option>
+                            <option value="sakura">🌸 Cherry Blossoms</option>
+                            <option value="sushi">🍣 Sushi</option>
+                            <option value="leaves">🍁 Autumn Leaves</option>
+                            <option value="nami">🗻 Ocean and Mt.Fuji</option>
+                        
+                        </select>
+                    </div>
+                    
+                    <div class="pure-control-group">
+                        <label for="aligned-name" class="">Select Font</label>
+                        <select class="dropdown-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="{{ font_name }}" name="fontname" id="select_font_name">
+                        
+                        <option value="tamanegi-kaisho">Traditional</option>
+                        <option value="tamanegi-geki">Traditional Wild</option>
+                        <option value="zenmaru-bold">Kawaii</option>
+                        <option value="genkai-mincho">Horror</option>
+                        
+                        </select>
+                    </div>
+                    
+                    <div class="pure-control-group">
+                        <label for="aligned-name" class="">Select Color</label>
+                        <select class="dropdown-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="{{ font_color }}" name="fontcolor" id="select_font_color">
+                        
+                        <option value="black"><span style="color:black">Black</span></option>
+                        <option value="red"><span style="color:red">Red</span></option>
+                        <option value="blue"><span style="color:blue">Blue</span></option>
+                        <option value="pink"><span style="color:pink">Pink</span></option>
+                        <option value="lightblue"><span style="color:lightblue">Light Blue</span></option>
+                        <option value="green"><span style="color:green">Green</span></option>
+                        <option value="lightgreen"><span style="color:lightgreen">Light Green</span></option>
+                        <option value="brown"><span style="color:brown">Brown</span></option>
+                        <option value="navy"><span style="color:navy">Navy</span></option>
+                        <option value="yellow"><span style="color: yellow">Yellow</span></option>
+                        <option value="purple"><span style="color: purple">Purple</span></option>
+                        <option value="gray"><span style="color:gray">Gray</span></option>
+                        
+                        
+                        </select>
+                    </div>
+                    
+                </div>
+                
+                <button type="submit" class="pure-button pure-button-primary">Get Kanji Name!</button>
+                <br>
+            </form>
+            
+        </div>
+        <input id="copy_link" value="http://127.0.0.1:4999/s?name={{ eng_name }}&img={{ img_name }}">
+        <script>
+            var select_frame_style = document.getElementById("select_frame_style");
+            var previous_frame_style = {{frame_style|tojson}};
+            Array.from(select_frame_style.options).forEach(function(option) {
+                if (option.value === previous_frame_style) {
+                    option.selected = true;
+                } else {
+                    option.selected = false;
+                }
+            });
+            
+            var select_font_name = document.getElementById("select_font_name");
+            var previous_font_name = {{ font_name | tojson}};
+            Array.from(select_font_name.options).forEach(function(option) {
+                if (option.value === previous_font_name) {
+                    option.selected = true;
+                } else {
+                    option.selected = false;
+                }
+            });
+
+            var select_font_color = document.getElementById("select_font_color");
+            var previous_font_color = {{font_color | tojson}}
+            Array.from(select_font_color.options).forEach(function(option) {
+                if (option.value === previous_font_color) {
+                    option.selected = true;
+                } else {
+                    option.selected = false;
+                }
+            });
+            
+
+            function CopyKanjiNameToClipBoard(aElem) {
+                var copyTarget = document.getElementById("mykanjiname");
+                copyTarget.select();
+                document.execCommand("Copy");
+
+                aElem.innerHTML = "Copied! <img src='static/img/clipboard-check-fill.svg'>"
+
+                //alert("Copied: " + {{ kanji_name | tojson}});
+            }
+
+            var img_name = {{img_name | tojson}}
+            var eng_name = {{ eng_name | tojson }}
+
+            async function CopyShareLinkToClipBoard(aElem) {
+                
+                if (navigator.canShare) {
+                    await navigator.share({ title: eng_name + "'s Kanji Name!", url: `https://kanjininja.com/index.cgi/s?name=${eng_name}&img=${img_name}` });
+                } else {
+                    alert("Use phone browsers to share on Twitter, Instgram and more! \nOn a laptop browser, you can download or copy the link.")
+                    var copyTarget = document.getElementById("copy_link");
+                    copyTarget.select();
+                    document.execCommand("Copy");
+                    aElem.innerHTML = "Copied Link!";
+                    //navigator.clipboard.writeText(`http://127.0.0.1:4999/s?name=${ eng_name }&img=${ img_name }`);
+                }
+                
+            }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                var isChromium = window.chrome;
+                var winNav = window.navigator;
+                var vendorName = winNav.vendor;
+                var isOpera = typeof window.opr !== "undefined";
+                var isIEedge = winNav.userAgent.indexOf("Edg") > -1;
+                var isIOSChrome = winNav.userAgent.match("CriOS");
+
+                if (isIOSChrome) {
+                    document.querySelector(".footer").style.visibility = "hidden";
+                } else if(
+                isChromium !== null &&
+                typeof isChromium !== "undefined" &&
+                vendorName === "Google Inc." &&
+                isOpera === false &&
+                isIEedge === false
+                ) {
+                    document.querySelector(".footer").style.visibility = "hidden";
+                } else { 
+                // not Google Chrome 
+                }
+            });
+
+            var suggestions = {{kanji_name_suggestions|tojson}};
+            function onGetKanjiNameButtonOnSuggestionCardClicked(kanji_name) {
+                //e.preventDefault();
+                var $regenForm = document.getElementById("regen_form");
+                var $input = document.createElement("input");
+                $input.name = "kanji_name";
+                $input.value = kanji_name;
+                $regenForm.appendChild($input);
+                var $input = document.createElement("input");
+                $input.name = "suggestions"
+                $input.value = JSON.stringify(suggestions);
+                $regenForm.appendChild($input);
+                //formData.append("suggestions", suggestionsStr);
+
+                $regenForm.submit();
+            }
+
+            
+
+            
+        </script>
+        
+{% endblock %}
+
